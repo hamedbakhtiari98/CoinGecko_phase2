@@ -16,4 +16,11 @@ namespace CoinGecko_Phase2.API
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string PassWord { get; set; }
     }
+
+    public class LoginViewModel
+    {
+        public string userName { get; set; }
+        public string passWord { get; set; }
+    }
+
 }

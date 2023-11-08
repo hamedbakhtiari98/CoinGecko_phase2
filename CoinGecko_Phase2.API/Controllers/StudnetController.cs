@@ -1,19 +1,23 @@
 ﻿using CoinGecko_Phase2.API;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoinGecko_Phase2.API.Controllers
 {
-
+    [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/Student")]
+
     public class StudnetController : ControllerBase
     {
         MyContext context;
         StudentService studentService;
-        public StudnetController()
+        IConfiguration configuration;
+        public StudnetController(IConfiguration configuration)
         {
             context = new MyContext();
-            studentService = new StudentService(context);
+            this.configuration = configuration;
+            studentService = new StudentService(context,configuration);
         }
 
         [HttpGet]
@@ -31,19 +35,5 @@ namespace CoinGecko_Phase2.API.Controllers
             context.SaveChanges();
             return student;
         }
-
-
-        [HttpPost]
-        [Route("Login")]
-        public bool Login(string userName, string passWord)
-        {
-            var q = context.students.Any(s=>s.UserName == userName && s.PassWord == passWord);
-            if (q)
-                return q;
-            else
-                return false;
-        }
-
-
     }
 }

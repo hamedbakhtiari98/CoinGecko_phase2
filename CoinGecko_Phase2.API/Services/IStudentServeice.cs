@@ -2,7 +2,8 @@
 {
     public interface IStudentServeice
     {
-        bool Login(string userName, string passWord);
+        Student Login(string userName, string passWord);
 
+        string GenerateJWT(Student student);
     }
 }
