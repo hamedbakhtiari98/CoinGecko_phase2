@@ -81,3 +81,5 @@ D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\obj\Debug\net6.0\refint\C
 D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\obj\Debug\net6.0\CoinGecko_Phase2.API.pdb
 D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\obj\Debug\net6.0\CoinGecko_Phase2.API.genruntimeconfig.cache
 D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\obj\Debug\net6.0\ref\CoinGecko_Phase2.API.dll
+D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\bin\Debug\net6.0\AutoMapper.dll
+D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

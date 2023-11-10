@@ -13,6 +13,7 @@ builder.Services.AddControllers();
 //builder.Services.AddTransient<StudentService, IStudentServeice>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(x =>
 {
     x.TokenValidationParameters = new ()

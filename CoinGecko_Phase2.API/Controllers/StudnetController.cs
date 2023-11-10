@@ -33,6 +33,7 @@ namespace CoinGecko_Phase2.API.Controllers
             student.PassWord = Service.HashPass(student.PassWord);
             context.students.Add(student);
             context.SaveChanges();
+            List<Student> students = new List<Student>();
             return student;
         }
     }
