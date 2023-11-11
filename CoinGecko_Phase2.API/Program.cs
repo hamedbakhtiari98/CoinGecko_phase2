@@ -1,6 +1,8 @@
 using CoinGecko_Phase2.API;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Quartz;
+using Quartz.Impl;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +15,10 @@ builder.Services.AddControllers();
 //builder.Services.AddTransient<StudentService, IStudentServeice>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddQuartz();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddHostedService<AppHostService>();
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(x =>
 {
     x.TokenValidationParameters = new ()
@@ -29,6 +34,7 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(x =>
     };
 });
 
+Console.WriteLine("Hello World");
 
 var app = builder.Build();
 

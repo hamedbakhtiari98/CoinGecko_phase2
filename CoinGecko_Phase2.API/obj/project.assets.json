@@ -556,7 +556,7 @@
       "Microsoft.Win32.SystemEvents/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/_._": {}
+          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {}
         },
         "runtime": {
           "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {}
@@ -581,6 +581,34 @@
         },
         "runtime": {
           "lib/netstandard2.0/Mono.TextTemplating.dll": {}
+        }
+      },
+      "Quartz/3.7.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "2.1.1",
+          "System.Configuration.ConfigurationManager": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Quartz.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Quartz.dll": {}
+        }
+      },
+      "Quartz.Extensions.DependencyInjection/3.7.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
+          "Microsoft.Extensions.Options": "6.0.0",
+          "Quartz": "3.7.0"
+        },
+        "compile": {
+          "lib/net6.0/Quartz.Extensions.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Quartz.Extensions.DependencyInjection.dll": {}
         }
       },
       "Swashbuckle.AspNetCore/6.2.3": {
@@ -650,7 +678,7 @@
           "System.Security.Permissions": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/_._": {}
+          "lib/net6.0/System.Configuration.ConfigurationManager.dll": {}
         },
         "runtime": {
           "lib/net6.0/System.Configuration.ConfigurationManager.dll": {}
@@ -680,7 +708,7 @@
           "Microsoft.Win32.SystemEvents": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/_._": {}
+          "lib/net6.0/System.Drawing.Common.dll": {}
         },
         "runtime": {
           "lib/net6.0/System.Drawing.Common.dll": {}
@@ -798,7 +826,7 @@
       "System.Security.AccessControl/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/_._": {}
+          "lib/net6.0/System.Security.AccessControl.dll": {}
         },
         "runtime": {
           "lib/net6.0/System.Security.AccessControl.dll": {}
@@ -856,7 +884,7 @@
           "System.Windows.Extensions": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/_._": {}
+          "lib/net6.0/System.Security.Permissions.dll": {}
         },
         "runtime": {
           "lib/net6.0/System.Security.Permissions.dll": {}
@@ -968,7 +996,7 @@
           "System.Drawing.Common": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/_._": {}
+          "lib/net6.0/System.Windows.Extensions.dll": {}
         },
         "runtime": {
           "lib/net6.0/System.Windows.Extensions.dll": {}
@@ -2000,6 +2028,44 @@
         "mono.texttemplating.nuspec"
       ]
     },
+    "Quartz/3.7.0": {
+      "sha512": "11sQqbnhv/KBLcdpj8I7KlpK/QGnNbVj8YiBLsGo4d7rm78WSukODcKlJuz7bLQ6ZF5BYkalrdHUDTgL8ZgkcQ==",
+      "type": "package",
+      "path": "quartz/3.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net462/Quartz.dll",
+        "lib/net462/Quartz.xml",
+        "lib/net472/Quartz.dll",
+        "lib/net472/Quartz.xml",
+        "lib/net6.0/Quartz.dll",
+        "lib/net6.0/Quartz.xml",
+        "lib/netstandard2.0/Quartz.dll",
+        "lib/netstandard2.0/Quartz.xml",
+        "quartz-logo-small.png",
+        "quartz.3.7.0.nupkg.sha512",
+        "quartz.nuspec"
+      ]
+    },
+    "Quartz.Extensions.DependencyInjection/3.7.0": {
+      "sha512": "wlkikyE1M5PdNfT8H3vIsFhGi7NpwAaGIik+ssHggHk6KsedIqMGY0NLIM8RVoEwF23iry9iSE1l0kZiIkrzPA==",
+      "type": "package",
+      "path": "quartz.extensions.dependencyinjection/3.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net6.0/Quartz.Extensions.DependencyInjection.dll",
+        "lib/net6.0/Quartz.Extensions.DependencyInjection.xml",
+        "lib/netcoreapp3.1/Quartz.Extensions.DependencyInjection.dll",
+        "lib/netcoreapp3.1/Quartz.Extensions.DependencyInjection.xml",
+        "lib/netstandard2.0/Quartz.Extensions.DependencyInjection.dll",
+        "lib/netstandard2.0/Quartz.Extensions.DependencyInjection.xml",
+        "quartz-logo-small.png",
+        "quartz.extensions.dependencyinjection.3.7.0.nupkg.sha512",
+        "quartz.extensions.dependencyinjection.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/6.2.3": {
       "sha512": "cnzQDn0Le+hInsw2SYwlOhOCPXpYi/szcvnyqZJ12v+QyrLBwAmWXBg6RIyHB18s/mLeywC+Rg2O9ndz0IUNYQ==",
       "type": "package",
@@ -2982,6 +3048,8 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.13",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.13",
       "Microsoft.IdentityModel.Tokens >= 6.25.0",
+      "Quartz >= 3.7.0",
+      "Quartz.Extensions.DependencyInjection >= 3.7.0",
       "Swashbuckle.AspNetCore >= 6.2.3"
     ]
   },
@@ -3058,6 +3126,14 @@
           "Microsoft.IdentityModel.Tokens": {
             "target": "Package",
             "version": "[6.25.0, )"
+          },
+          "Quartz": {
+            "target": "Package",
+            "version": "[3.7.0, )"
+          },
+          "Quartz.Extensions.DependencyInjection": {
+            "target": "Package",
+            "version": "[3.7.0, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

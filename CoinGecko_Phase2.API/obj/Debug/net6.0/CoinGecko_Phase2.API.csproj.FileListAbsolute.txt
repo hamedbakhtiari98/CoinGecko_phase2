@@ -83,3 +83,5 @@ D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\obj\Debug\net6.0\CoinGeck
 D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\obj\Debug\net6.0\ref\CoinGecko_Phase2.API.dll
 D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\bin\Debug\net6.0\AutoMapper.dll
 D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\bin\Debug\net6.0\Quartz.dll
+D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\bin\Debug\net6.0\Quartz.Extensions.DependencyInjection.dll

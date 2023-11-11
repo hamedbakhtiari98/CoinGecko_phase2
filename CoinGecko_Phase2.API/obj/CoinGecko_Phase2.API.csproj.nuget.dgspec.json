@@ -74,6 +74,14 @@
               "target": "Package",
               "version": "[6.25.0, )"
             },
+            "Quartz": {
+              "target": "Package",
+              "version": "[3.7.0, )"
+            },
+            "Quartz.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[3.7.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"

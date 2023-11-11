@@ -13,7 +13,7 @@ namespace CoinGecko_Phase2.API
         #region Tables
 
         public DbSet<Student> students { get; set; }
-
+        public DbSet<Admin> Admins { get; set; }
 
         #endregion
 

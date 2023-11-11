@@ -50,6 +50,7 @@ namespace CoinGecko_Phase2.API
             //ClaimsForToken.Add(new Claim("Password", student.PassWord));
             //ClaimsForToken.Add(new Claim("Name", student.Name));
 
+            //var q = configure["JwtSettings:Issuer"];
 
             var jwtSecurityToken = new JwtSecurityToken(
                 configure["JwtSettings:Issuer"],
@@ -65,6 +66,17 @@ namespace CoinGecko_Phase2.API
 
             return token;
 
+        }
+
+        public void CreateAdmin()
+        {
+            Admin admin = new Admin()
+            {
+                UserName = configure["Security:UserName"],
+                PassWord = configure["Security:Password"]
+            };
+            context.Admins.Add(admin);
+            context.SaveChanges();
         }
     }
 }
