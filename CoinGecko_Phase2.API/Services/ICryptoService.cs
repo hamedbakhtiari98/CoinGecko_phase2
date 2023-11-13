@@ -2,6 +2,9 @@
 {
     public interface ICryptoService
     {
-        public List<CryptoInfo> GetCryptoInfos();
+        List<CryptoInfo> GetCryptoInfos(int pageId);
+        List<Category> GetCategories();
+
+
     }
 }

@@ -12,16 +12,22 @@
 
         }
         //IStudentServeice _studentServeice = new StudentService(_context, configuration);
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
-            Admin admin = new Admin()
+            if(!context.students.Any(c=> c.UserName == "Admin"))
             {
-                UserName = configure["Security:UserName"],
-                PassWord = configure["Security:Password"]
-            };
-            context.Admins.Add(admin);   
-            context.SaveChanges();
-            return Task.CompletedTask;
+                Student admin = new Student()
+                {
+                    Name = configure["Security:Name"],
+                    UserName = configure["Security:UserName"],
+                    Email = configure["Security:Email"],
+                    PhoneNumber = configure["Security:PhoneNumber"],
+                    Family = configure["Security:Family"],
+                    PassWord = Service.HashPass(configure["Security:Password"])
+                };
+                await context.students.AddAsync(admin);
+                await context.SaveChangesAsync();
+            }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

@@ -1,10 +1,11 @@
 ﻿using CoinGecko_Phase2.API;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace CoinGecko_Phase2.API.Controllers
 {
-    [Authorize]
+
     [ApiController]
     [Route("api/Student")]
 
@@ -20,21 +21,48 @@ namespace CoinGecko_Phase2.API.Controllers
             studentService = new StudentService(context,configuration);
         }
 
+        [Authorize]
         [HttpGet]
-        public List<Student> GetStudents()
+        [Route("{page}")]
+        public List<Student> GetStudents(int page)
         {
-            return context.students.ToList(); 
+            var pageResult = 3f;
+            var pageCuont = Math.Ceiling(context.students.Count()/ pageResult);
+
+            var students = context.students
+                .Skip((page - 1) * (int)pageResult)
+                .Take((int)pageResult)
+                .ToList();
+
+            Log.Information("Students Information Log");
+            Log.Information("Students are => {@students}", students);
+
+
+            return students;
+
+
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("CreateStudent")]
-        public Student CreateStudent([FromBody]Student student) // How about from body
+        public string CreateStudent([FromBody]Student student) // How about from body
         {
+            //if(context.students.Any(c=> c.UserName == student.UserName))
+            //{
+            //    return "User with this username exists";
+            //}
+
+
             student.PassWord = Service.HashPass(student.PassWord);
             context.students.Add(student);
             context.SaveChanges();
             List<Student> students = new List<Student>();
-            return student;
+
+            Log.Information("Create Student Log");
+            Log.Information("Student is => {@student}", students);
+
+            return "User added.";
         }
     }
 }
