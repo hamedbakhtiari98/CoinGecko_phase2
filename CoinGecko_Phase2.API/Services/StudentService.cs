@@ -46,9 +46,9 @@ namespace CoinGecko_Phase2.API
                 );
             var ClaimsForToken = new List<Claim>();
             ClaimsForToken.Add(new Claim("UserId", student.StudentId.ToString()));
-            //ClaimsForToken.Add(new Claim("UserName", student.UserName));
-            //ClaimsForToken.Add(new Claim("Password", student.PassWord));
-            //ClaimsForToken.Add(new Claim("Name", student.Name));
+            ClaimsForToken.Add(new Claim("UserName", student.UserName));
+            ClaimsForToken.Add(new Claim("Password", student.PassWord));
+            ClaimsForToken.Add(new Claim("Name", student.Name));
 
             //var q = configure["JwtSettings:Issuer"];
 
@@ -67,15 +67,14 @@ namespace CoinGecko_Phase2.API
             return token;
 
         }
-
         public void CreateAdmin()
         {
-            Admin admin = new Admin()
+            Student admin = new Student()
             {
                 UserName = configure["Security:UserName"],
                 PassWord = configure["Security:Password"]
             };
-            context.Admins.Add(admin);
+            context.students.Add(admin);
             context.SaveChanges();
         }
     }

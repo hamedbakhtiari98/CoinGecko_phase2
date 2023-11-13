@@ -24,7 +24,7 @@ namespace CoinGecko_Phase2.API.Controllers
         [HttpPost]
         public IActionResult Login([FromBody] LoginViewModel login)
         {
-            var q = studentService.Login(login.userName, login.passWord);
+            var q = studentService.Login(login.userName, Service.HashPass(login.passWord));
             if (q != null)
             {
                 return Ok(studentService.GenerateJWT(q));

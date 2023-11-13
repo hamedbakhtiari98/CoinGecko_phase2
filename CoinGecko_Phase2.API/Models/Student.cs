@@ -10,11 +10,11 @@ namespace CoinGecko_Phase2.API
 
         public string Name { get; set; }
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public string Family { get; set; }
+        public string? Family { get; set; }
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string UserName { get; set; }
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]

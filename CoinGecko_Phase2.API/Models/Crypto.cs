@@ -30,4 +30,33 @@ namespace CoinGecko_Phase2.API
         public Crypto Crypto { get; set; }
 
     }
+
+
+    public class Category
+    {
+        [Key]
+        public int CategoryId { get; set; }
+        public string? id { get; set; }
+        public string? name { get; set; }
+        public float? market_cap { get; set; }
+        public double? volume_24h { get; set; }
+        public string? updated_at { get; set; }
+    }
+
+
+    public class OHLC
+    {
+        [Key]
+        public int Id { get; set; }
+        public string dateTime { get; set; }
+        public double? volume { get; set; }
+        public double? O { get; set; }
+        public double? H { get; set; }
+        public double? L { get; set; }
+        public double? C { get; set; }
+
+        [ForeignKey("id")]
+        public string CryptoId { get; set; }
+        public Crypto Crypto { get; set; }
+    }
 }

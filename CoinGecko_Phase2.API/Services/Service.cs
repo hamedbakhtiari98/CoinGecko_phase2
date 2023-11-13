@@ -12,7 +12,8 @@ namespace CoinGecko_Phase2.API
         public static string HashPass(string password)
         {
 
-            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
+            byte[] salt = new byte[1];
+            salt[0] = 0;
 
             string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: password,
