@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\CoinGecko_Phase2.API.props" />
+</Project>

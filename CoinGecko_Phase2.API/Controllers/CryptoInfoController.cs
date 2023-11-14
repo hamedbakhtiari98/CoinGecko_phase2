@@ -85,8 +85,13 @@ namespace CoinGecko_Phase2.API.Controllers
 
         }
 
-
-
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("HealthCheckCategory")]
+        public List<Category> GetHealthCategory()
+        {
+            return cryptoService.GetCategories();
+        }
 
 
 
