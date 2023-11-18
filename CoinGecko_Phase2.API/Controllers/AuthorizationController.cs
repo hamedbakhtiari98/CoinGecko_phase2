@@ -10,27 +10,30 @@ namespace CoinGecko_Phase2.API.Controllers
     public class AuthorizationController : ControllerBase
     {
 
-        MyContext context;
-        StudentService studentService;
-        IConfiguration configuration;
-        public AuthorizationController(IConfiguration configuration)
+        //MyContext context;
+        //IConfiguration configuration;
+        IStudentServeice studentService;
+        public AuthorizationController(IConfiguration configuration, IStudentServeice studentServeice )
         {
-            this.configuration = configuration;
-            context = new MyContext();
-            studentService = new StudentService(context, configuration);
+            //this.configuration = configuration;
+            //context = new MyContext();
+            this.studentService = studentServeice;
+        }
+
+
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            throw new NotImplementedException();
         }
 
 
         [HttpPost]
-        public IActionResult Login([FromBody] LoginViewModel login)
+        public string Login([FromBody] LoginViewModel login)
         {
-            var q = studentService.Login(login.userName, Service.HashPass(login.passWord));
-            if (q != null)
-            {
-                return Ok(studentService.GenerateJWT(q));
-            }
-
-           return NotFound();
+            //var q = studentService.ReadJWT();
+            return studentService.GenerateJWT(login.userName, login.passWord);
 
         }
     }

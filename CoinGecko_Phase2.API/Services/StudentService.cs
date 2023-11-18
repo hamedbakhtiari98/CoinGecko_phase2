@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CoinGecko_Phase2.API;
+using CoinGecko_Phase2.API.Reposiroty;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,32 +12,74 @@ namespace CoinGecko_Phase2.API
     {
         private readonly MyContext context;
         private readonly IConfiguration configure;
-        public StudentService(MyContext context, IConfiguration configuration)
+        private IStudentRepository studentRepository;
+        public StudentService(MyContext context, IConfiguration configuration, IStudentRepository studentRepository)
         {
             this.context = context;
+            this.studentRepository = studentRepository;
             this.configure = configuration;
         }
 
+
+        public List<Student> GetStudnets(int page)
+        {
+            var q = studentRepository.GetAllStudents();
+            var pageResult = 3f;
+            var pageCuont = Math.Ceiling(q.Count() / pageResult);
+
+            var students = context.students
+                .Skip((page - 1) * (int)pageResult)
+                .Take((int)pageResult)
+                .ToList();
+            return students;
+        }
+
+
         public Student Login(string userName, string passWord)
         {
-            var q = context.students.SingleOrDefault(x => x.UserName == userName && x.PassWord == passWord);
-            if (q != null)
+            return studentRepository.GetStudent(userName, passWord);
+        }
+
+        public int AddStudent(Student student)
+        {
+            return studentRepository.AddStudent(student);
+        }
+
+        public int AddAdmin()
+        {
+            Student admin = new Student()
             {
-               return q;
-            }
-            else
+                Name = configure["Security:Name"],
+                UserName = configure["Security:UserName"],
+                Email = configure["Security:Email"],
+                PhoneNumber = configure["Security:PhoneNumber"],
+                Family = configure["Security:Family"],
+                PassWord = Service.HashPass(configure["Security:Password"])
+            };
+            return studentRepository.AddAdmin(admin);
+        }
+
+        public static IConfiguration InitConfiguration()
+        {
+            var config = new ConfigurationBuilder()
+               .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
+            return config;
+        }
+
+        public string GenerateJWT(string userName, string passWord)
+        {
+            var student = Login(userName, Service.HashPass(passWord));
+
+            if (student == null)
             {
                 return null;
             }
-            
-        }
-        public string GenerateJWT(Student student)
-        {
-
 
             var securityKey = new SymmetricSecurityKey(
                 Encoding.ASCII.GetBytes(configure["JwtSettings:Key"]));
-                
+
             //byte[] test = Encoding.ASCII.GetBytes(configure["JwtSettings:Issuer"]);
 
             //string test1 = test[1].ToString();
@@ -67,15 +111,19 @@ namespace CoinGecko_Phase2.API
             return token;
 
         }
-        public void CreateAdmin()
+
+        public string ReadJWT(string jwtString)
         {
-            Student admin = new Student()
+            //var jwtsample = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI1MSIsIlVzZXJOYW1lIjoiQWRtaW4iLCJQYXNzd29yZCI6Ik5qRFJ3bEdHVnR1UXc2ZVc5NFc0YmFBU2pTREdFbWdXWW9tMmRQRUpUNHc9IiwiTmFtZSI6IkFkbWluIiwibmJmIjoxNjk5OTUyMDk3LCJleHAiOjE2OTk5NTU2OTcsImlzcyI6IkNvaW5HZWNrb19QaGFzZTIuQVBJIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzExNiJ9.UGpoA3Adk42v5RujQUTBYRFHZ-6lu3gbOOSszCcsKak";
+            var handler = new JwtSecurityTokenHandler();
+            if(jwtString ==  null)
             {
-                UserName = configure["Security:UserName"],
-                PassWord = configure["Security:Password"]
-            };
-            context.students.Add(admin);
-            context.SaveChanges();
+                return null;
+            }
+            var token = handler.ReadJwtToken(jwtString).Payload.Claims.ToList();
+            return token[1].Value;
         }
+
+
     }
 }

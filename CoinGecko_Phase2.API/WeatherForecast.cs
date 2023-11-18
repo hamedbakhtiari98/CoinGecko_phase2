@@ -11,3 +11,4 @@ namespace CoinGecko_Phase2.API
         public string? Summary { get; set; }
     }
 }
+

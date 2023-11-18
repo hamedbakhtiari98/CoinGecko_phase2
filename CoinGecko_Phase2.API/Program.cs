@@ -1,5 +1,6 @@
 using CoinGecko_Phase2.API;
 using CoinGecko_Phase2.API.Health;
+using CoinGecko_Phase2.API.Reposiroty;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,14 @@ var config = builder.Configuration;
 
 // Add services to the container.
 
+//builder.Services.AddTransient<IStudentServeice, StudentService>();
+//builder.Services.AddTransient<ICryptoService, CryptoService>();
+//builder.Services.AddTransient<IStudentRepository, StudentRepository>();
+//builder.Services.AddTransient<ICryptoRepository, CryptoRepository>();
 
 builder.Services.AddHealthChecks()
-    //.AddCheck<HealthDbConnection>("SqlServer")
-    .AddSqlServer(builder.Configuration["ConnectionStrings:MyConnectionString"])
+    .AddCheck<HealthDbConnection>("SqlServer")
+    //.AddSqlServer(builder.Configuration["ConnectionStrings:MyConnectionString"])
     .AddCheck<HealthCheckConiGeckoApi>("ConinGeckoApi");
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -117,10 +122,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    //app.UseDeveloperExceptionPage();
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler("/error");
 
 app.UseHttpsRedirection();
 
@@ -138,7 +145,4 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-//app.Run((context) =>
-//{
-//    throw new Exception("test");
-//} );
+app.Run();

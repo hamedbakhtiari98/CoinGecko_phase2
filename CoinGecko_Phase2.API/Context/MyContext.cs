@@ -5,14 +5,14 @@ namespace CoinGecko_Phase2.API
     public class MyContext:DbContext
     {
 
-        //public MyContext(DbContextOptions<MyContext> options):base(options)
-        //{
-
-        //}
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public MyContext(DbContextOptions<MyContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-G7IA4K7; Initial Catalog=StudentDb; Integrated Security=True; TrustServerCertificate=True");
+
         }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Server=DESKTOP-G7IA4K7; Initial Catalog=StudentDb; Integrated Security=True; TrustServerCertificate=True");
+        //}
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

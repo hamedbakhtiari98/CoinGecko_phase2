@@ -11,28 +11,21 @@ namespace CoinGecko_Phase2.API.Controllers
 
     public class StudnetController : ControllerBase
     {
-        MyContext context;
+        //MyContext context;
         StudentService studentService;
         IConfiguration configuration;
-        public StudnetController(IConfiguration configuration)
+        public StudnetController(IConfiguration configuration, StudentService studentServeice)
         {
-            context = new MyContext();
-            this.configuration = configuration;
-            studentService = new StudentService(context,configuration);
+            //context = new MyContext();
+            //this.configuration = configuration;
+            this.studentService = studentServeice;
         }
 
-        [Authorize]
         [HttpGet]
         [Route("{page}")]
         public List<Student> GetStudents(int page)
         {
-            var pageResult = 3f;
-            var pageCuont = Math.Ceiling(context.students.Count()/ pageResult);
-
-            var students = context.students
-                .Skip((page - 1) * (int)pageResult)
-                .Take((int)pageResult)
-                .ToList();
+            var students = studentService.GetStudnets(page);
 
             Log.Information("Students Information Log");
             Log.Information("Students are => {@students}", students);
@@ -55,14 +48,17 @@ namespace CoinGecko_Phase2.API.Controllers
 
 
             student.PassWord = Service.HashPass(student.PassWord);
-            context.students.Add(student);
-            context.SaveChanges();
-            List<Student> students = new List<Student>();
+            studentService.AddStudent(student);
 
             Log.Information("Create Student Log");
-            Log.Information("Student is => {@student}", students);
+            Log.Information("Student is => {@student}", student);
 
             return "User added.";
         }
+
+
+
+
+
     }
 }
