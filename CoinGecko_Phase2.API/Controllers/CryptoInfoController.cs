@@ -10,13 +10,12 @@ namespace CoinGecko_Phase2.API.Controllers
     [Route("api/[Controller]")]
     public class CryptoInfoController : ControllerBase
     {
-        MyContextCrypto context;
+
         ICryptoService cryptoService;
         IMapper mapper;
-        public CryptoInfoController(IMapper mapper)
+        public CryptoInfoController(IMapper mapper, ICryptoService cryptoService)
         {
-            context = new MyContextCrypto();
-            cryptoService = new CryptoService(context);
+            this.cryptoService = cryptoService;
             this.mapper = mapper;
         }
 
@@ -25,22 +24,15 @@ namespace CoinGecko_Phase2.API.Controllers
 
         public IActionResult GetInformation(int page)
         {
-
-
-            var pageResult = 5f;
-            var coinInformation = context.CryptoInfos.OrderByDescending(c => c.market_cap)
-                .Skip((page - 1) * (int)pageResult)
-                .Take((int)pageResult)
-                .ToList();
-
-            if (coinInformation == null)
+           var cryptoInformation = cryptoService.GetCryptoInfos(page);
+            if (cryptoInformation == null)
             {
                 return NotFound();
             }
 
             Log.Information("Crypto Information Log");
-            Log.Information("Crypto Informations are => {@coinInformation}", coinInformation);
-            return Ok(coinInformation);
+            Log.Information("Crypto Informations are => {@coinInformation}", cryptoInformation);
+            return Ok(cryptoInformation);
 
 
         }
@@ -52,24 +44,17 @@ namespace CoinGecko_Phase2.API.Controllers
         public ActionResult GetOHLC(string id, string date)
         {
 
-            var ohlcInformation = context.oHLCs.Where(o => o.CryptoId == id && o.dateTime == date).SingleOrDefault();
+            var ohlcInformation = cryptoService.GetOHLC(id, date);
 
             Log.Information("Crypto Information Log");
             Log.Information("Crypto Informations are => {@ohlcInformation}", ohlcInformation);
-
             if (ohlcInformation == null)
             {
                 return NotFound();
             }
 
             return Ok(ohlcInformation);
-
-
-
-
         }
-
-
 
         //[Authorize(Policy = "adminPolicy")]
         [HttpGet]
@@ -77,11 +62,7 @@ namespace CoinGecko_Phase2.API.Controllers
         public IActionResult GetCategories(int page)
         {
 
-            var pageResult = 5f;
-            var category = context.categories
-                .Skip((page - 1) * (int)pageResult)
-                .Take((int)pageResult)
-                .ToList();
+            var category = cryptoService.GetCategories(page);
 
             Log.Information("Crypto Information Log");
             Log.Information("Crypto Informations are => {@category}", category);
@@ -100,7 +81,6 @@ namespace CoinGecko_Phase2.API.Controllers
         public IActionResult GetCryptoInfo(int page)
         {
 
-
             var q = cryptoService.GetCryptoInfos(page);
             var cryptoInfoDTO = mapper.Map<List<CryptoInfoDTO>>(q);
             Log.Information("Crypto Information Log");
@@ -108,16 +88,6 @@ namespace CoinGecko_Phase2.API.Controllers
             if(cryptoInfoDTO == null) {  return NotFound(); }
             return Ok(cryptoInfoDTO);
 
-
-
-        }
-
-        //[AllowAnonymous]
-        [HttpGet]
-        [Route("HealthCheckCategory")]
-        public List<Category> GetHealthCategory()
-        {
-            return cryptoService.GetCategories();
         }
     }
 }

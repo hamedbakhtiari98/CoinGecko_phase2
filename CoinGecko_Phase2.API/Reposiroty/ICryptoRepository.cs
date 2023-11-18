@@ -3,7 +3,7 @@
     public interface ICryptoRepository
     {
         List<Category> GetCategories();
-        List<OHLC> GetOHLC();
+        OHLC GetOHLC(string id, string date);
         List<CryptoInfo> GetCryptoInfo();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CoinGecko_Phase2.API.Reposiroty;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoinGecko_Phase2.API
 {
@@ -16,12 +17,12 @@ namespace CoinGecko_Phase2.API
 
         public List<CryptoInfo> GetCryptoInfo()
         {
-            return context.CryptoInfos.ToList();
+            return context.CryptoInfos.Include(c=>c.Crypto).ToList();
         }
 
-        public List<OHLC> GetOHLC()
+        public OHLC GetOHLC(string id, string date)
         {
-            return context.oHLCs.ToList();
+            return context.oHLCs.Where(o => o.CryptoId == id && o.dateTime == date).Include(c=>c.Crypto).SingleOrDefault();
         }
     }
 }

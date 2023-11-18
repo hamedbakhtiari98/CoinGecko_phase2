@@ -16,18 +16,16 @@ var config = builder.Configuration;
 
 // Add services to the container.
 
-//builder.Services.AddTransient<IStudentServeice, StudentService>();
-//builder.Services.AddTransient<ICryptoService, CryptoService>();
-//builder.Services.AddTransient<IStudentRepository, StudentRepository>();
-//builder.Services.AddTransient<ICryptoRepository, CryptoRepository>();
+builder.Services.AddTransient<IStudentServeice, StudentService>();
+builder.Services.AddTransient<ICryptoService, CryptoService>();
+builder.Services.AddTransient<IStudentRepository, StudentRepository>();
+builder.Services.AddTransient<ICryptoRepository, CryptoRepository>();
 
 builder.Services.AddHealthChecks()
     .AddCheck<HealthDbConnection>("SqlServer")
     //.AddSqlServer(builder.Configuration["ConnectionStrings:MyConnectionString"])
     .AddCheck<HealthCheckConiGeckoApi>("ConinGeckoApi");
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddTransient<StudentService, IStudentServeice>();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
@@ -80,11 +78,22 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddQuartz();
-//builder.Services.AddDbContext<MyContext>(o =>
-//{
-//    o.UseSqlServer(config.GetConnectionString("Server=DESKTOP-G7IA4K7; Initial Catalog=StudentDb; Integrated Security=True; TrustServerCertificate=True"));
-//});
+builder.Services.AddDbContext<MyContext>(o =>
+{
+    o.UseSqlServer(config.GetConnectionString("MyStudentDbConnectionString"));
+});
+
+builder.Services.AddDbContext<MyContextCrypto>(o =>
+{
+    o.UseSqlServer(config.GetConnectionString("MyCryptoDbConnectionString"));
+});
+
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+
+
 //builder.Services.AddHostedService<AppHostService>();
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(x =>
 {

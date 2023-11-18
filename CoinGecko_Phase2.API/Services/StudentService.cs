@@ -10,14 +10,11 @@ namespace CoinGecko_Phase2.API
 {
     public class StudentService : IStudentServeice
     {
-        private readonly MyContext context;
-        private readonly IConfiguration configure;
+
         private IStudentRepository studentRepository;
-        public StudentService(MyContext context, IConfiguration configuration, IStudentRepository studentRepository)
+        public StudentService(IStudentRepository studentRepository)
         {
-            this.context = context;
             this.studentRepository = studentRepository;
-            this.configure = configuration;
         }
 
 
@@ -27,7 +24,7 @@ namespace CoinGecko_Phase2.API
             var pageResult = 3f;
             var pageCuont = Math.Ceiling(q.Count() / pageResult);
 
-            var students = context.students
+            var students = q
                 .Skip((page - 1) * (int)pageResult)
                 .Take((int)pageResult)
                 .ToList();
@@ -47,6 +44,7 @@ namespace CoinGecko_Phase2.API
 
         public int AddAdmin()
         {
+            var configure = StudentService.InitConfiguration();
             Student admin = new Student()
             {
                 Name = configure["Security:Name"],
@@ -71,6 +69,8 @@ namespace CoinGecko_Phase2.API
         public string GenerateJWT(string userName, string passWord)
         {
             var student = Login(userName, Service.HashPass(passWord));
+            var configure = StudentService.InitConfiguration();
+
 
             if (student == null)
             {

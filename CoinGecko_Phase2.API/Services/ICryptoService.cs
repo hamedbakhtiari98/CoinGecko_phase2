@@ -2,9 +2,8 @@
 {
     public interface ICryptoService
     {
-        List<CryptoInfo> GetCryptoInfos(int pageId);
-        List<Category> GetCategories();
-
-
+        List<CryptoInfoWithCoinDTO> GetCryptoInfos(int pageId);
+        List<Category> GetCategories(int page);
+        OhlcWithCrypto GetOHLC(string id, string date);
     }
 }
