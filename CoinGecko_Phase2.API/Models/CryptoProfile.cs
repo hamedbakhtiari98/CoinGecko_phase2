@@ -15,15 +15,18 @@ namespace CoinGecko_Phase2.API.Models
         public CryptoInformationProfile()
         {
             CreateMap<CryptoInfo, CryptoInfoWithCoinDTO>()
+                //.ForMember(dest =>
+                //    dest.id,
+                //    opt => opt.MapFrom(src => src.Crypto.id))
+                //.ForMember(dest =>
+                //    dest.name,
+                //    opt => opt.MapFrom(src => src.Crypto.name))
+                //.ForMember(dest =>
+                //    dest.symbol,
+                //    opt => opt.MapFrom(src => src.Crypto.symbol));
                 .ForMember(dest =>
-                    dest.id,
-                    opt => opt.MapFrom(src => src.Crypto.id))
-                .ForMember(dest =>
-                    dest.name,
-                    opt => opt.MapFrom(src => src.Crypto.name))
-                .ForMember(dest =>
-                    dest.symbol,
-                    opt => opt.MapFrom(src => src.Crypto.symbol));
+                    dest.crypto,
+                    opt => opt.MapFrom(src => src.Crypto));
         }
     }
 

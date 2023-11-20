@@ -4,6 +4,6 @@
     {
         List<Category> GetCategories();
         OHLC GetOHLC(string id, string date);
-        List<CryptoInfo> GetCryptoInfo();
+        List<CryptoInfoWithCoinDTO> GetCryptoInfo();
     }
 }

@@ -4,15 +4,17 @@ namespace CoinGecko_Phase2.API
 {
     public class MyContext:DbContext
     {
+        private readonly IConfiguration _configuration;
 
-        public MyContext(DbContextOptions<MyContext> options) : base(options)
+        public MyContext(DbContextOptions<MyContext> options, IConfiguration configuration) : base(options)
         {
-
+            _configuration = configuration;
         }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Server=DESKTOP-G7IA4K7; Initial Catalog=StudentDb; Integrated Security=True; TrustServerCertificate=True");
-        //}
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("MyStudentDbConnectionString"));
+        }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,6 +22,7 @@ namespace CoinGecko_Phase2.API
             modelBuilder.Entity<Student>()
                 .HasIndex(p => p.UserName)
                 .IsUnique(true);
+
         }
 
 
@@ -36,15 +39,23 @@ namespace CoinGecko_Phase2.API
 
     public class MyContextCrypto : DbContext
     {
-        public MyContextCrypto(DbContextOptions<MyContextCrypto> options): base(options)
-        {
-                
-        }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Server=DESKTOP-G7IA4K7; Initial Catalog=CryptoDB; Integrated Security=True; TrustServerCertificate=True");
-        //}
+        private readonly IConfiguration _configuration;
 
+        public MyContextCrypto(DbContextOptions<MyContextCrypto> options, IConfiguration configuration) : base(options)
+        {
+            _configuration = configuration;
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("MyCryptoDbConnectionString"));
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //modelBuilder.Entity<Crypto>()
+            //    .HasOne(c => c.CryptoInfo)
+            //    .WithOne(c => c.Crypto);
+
+        }
 
         #region Tables
 

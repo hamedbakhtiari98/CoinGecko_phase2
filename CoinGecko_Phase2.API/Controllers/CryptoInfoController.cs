@@ -33,8 +33,6 @@ namespace CoinGecko_Phase2.API.Controllers
             Log.Information("Crypto Information Log");
             Log.Information("Crypto Informations are => {@coinInformation}", cryptoInformation);
             return Ok(cryptoInformation);
-
-
         }
 
 
@@ -76,18 +74,18 @@ namespace CoinGecko_Phase2.API.Controllers
         }
 
 
-        [HttpGet]
-        [Route("{page}")]
-        public IActionResult GetCryptoInfo(int page)
-        {
+        //[HttpGet]
+        //[Route("{page}")]
+        //public IActionResult GetCryptoInfo(int page)
+        //{
 
-            var q = cryptoService.GetCryptoInfos(page);
-            var cryptoInfoDTO = mapper.Map<List<CryptoInfoDTO>>(q);
-            Log.Information("Crypto Information Log");
-            Log.Information("Crypto Informations are => {@cryptoInfoDTO}", cryptoInfoDTO);
-            if(cryptoInfoDTO == null) {  return NotFound(); }
-            return Ok(cryptoInfoDTO);
+        //    var q = cryptoService.GetCryptoInfos(page);
+        //    var cryptoInfoDTO = mapper.Map<List<CryptoInfoDTO>>(q);
+        //    Log.Information("Crypto Information Log");
+        //    Log.Information("Crypto Informations are => {@cryptoInfoDTO}", cryptoInfoDTO);
+        //    if(cryptoInfoDTO == null) {  return NotFound(); }
+        //    return Ok(cryptoInfoDTO);
 
-        }
+        //}
     }
 }

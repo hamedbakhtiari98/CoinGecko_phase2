@@ -83,6 +83,10 @@
               "target": "Package",
               "version": "[6.25.0, )"
             },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.69, )"
+            },
             "Quartz": {
               "target": "Package",
               "version": "[3.7.0, )"

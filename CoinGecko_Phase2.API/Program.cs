@@ -10,6 +10,7 @@ using Quartz;
 using Quartz.Impl;
 using Serilog;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -22,10 +23,14 @@ builder.Services.AddTransient<IStudentRepository, StudentRepository>();
 builder.Services.AddTransient<ICryptoRepository, CryptoRepository>();
 
 builder.Services.AddHealthChecks()
-    .AddCheck<HealthDbConnection>("SqlServer")
-    //.AddSqlServer(builder.Configuration["ConnectionStrings:MyConnectionString"])
+    //.AddCheck<HealthDbConnection>("SqlServer")
+    .AddSqlServer(builder.Configuration["ConnectionStrings:MyStudentDbConnectionString"])
     .AddCheck<HealthCheckConiGeckoApi>("ConinGeckoApi");
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
@@ -78,15 +83,10 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddQuartz();
-builder.Services.AddDbContext<MyContext>(o =>
-{
-    o.UseSqlServer(config.GetConnectionString("MyStudentDbConnectionString"));
-});
 
-builder.Services.AddDbContext<MyContextCrypto>(o =>
-{
-    o.UseSqlServer(config.GetConnectionString("MyCryptoDbConnectionString"));
-});
+builder.Services.AddDbContext<MyContext>();
+
+builder.Services.AddDbContext<MyContextCrypto>();
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

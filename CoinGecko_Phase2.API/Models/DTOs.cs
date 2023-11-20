@@ -15,10 +15,21 @@
         public double? total_volume { get; set; }
         public string? last_updated { get; set; }
 
+        //public string id { get; set; }
+        //public string symbol { get; set; }
+        //public string name { get; set; }
+
+        public CryptoDTO crypto { get; set; }
+
+    }
+
+    public class CryptoDTO
+    {
         public string id { get; set; }
         public string symbol { get; set; }
         public string name { get; set; }
     }
+
 
     public class OhlcWithCrypto
     {

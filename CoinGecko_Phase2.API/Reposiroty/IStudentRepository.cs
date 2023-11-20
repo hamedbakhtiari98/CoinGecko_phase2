@@ -6,6 +6,7 @@
         int AddAdmin(Student student);
         Student GetStudent(string userName, string passWord);
         List<Student> GetAllStudents();
-         
+        public string GenerateJWT(string userName, string PassWord);
+
     }
 }

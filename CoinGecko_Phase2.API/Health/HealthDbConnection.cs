@@ -6,12 +6,12 @@ namespace CoinGecko_Phase2.API.Health
 {
     public class HealthDbConnection : IHealthCheck
     {
-        //private readonly MyContext _context;
+        private readonly MyContext _context;
 
-        //public HealthDbConnection()
-        //{
-        //        _context = new MyContext();
-        //}
+        public HealthDbConnection(MyContext context)
+        {
+            _context = context;
+        }
 
 
 
@@ -19,7 +19,7 @@ namespace CoinGecko_Phase2.API.Health
         {
             try
             {
-                //await _context.students.AnyAsync(s => s.Name == "admin");
+                await _context.students.AnyAsync(s => s.Name == "admin");
                 return HealthCheckResult.Healthy();
             }
             catch (Exception ex)

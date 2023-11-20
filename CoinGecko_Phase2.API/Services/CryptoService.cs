@@ -25,7 +25,7 @@ namespace CoinGecko_Phase2.API
                 .Take((int)pageResult)
                 .ToList();
             var cryptoInfoWithCrypto = mapper.Map<List<CryptoInfoWithCoinDTO>> (q);
-            return cryptoInfoWithCrypto;
+            return q;
         }
 
 

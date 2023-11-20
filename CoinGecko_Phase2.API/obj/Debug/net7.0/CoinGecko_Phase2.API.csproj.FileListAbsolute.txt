@@ -95,3 +95,5 @@ D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\obj\Debug\net7.0\CoinGeck
 D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\obj\Debug\net7.0\CoinGecko_Phase2.API.genruntimeconfig.cache
 D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\obj\Debug\net7.0\ref\CoinGecko_Phase2.API.dll
 D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\bin\Debug\net7.0\HealthChecks.SqlServer.dll
+D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\bin\Debug\net7.0\Castle.Core.dll
+D:\Hamed\WebTest\CoinGecko_Phase2\CoinGecko_Phase2.API\bin\Debug\net7.0\Moq.dll

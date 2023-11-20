@@ -170,3 +170,5 @@ D:\Hamed\WebTest\CoinGecko_Phase2\TestProject1\obj\Debug\net7.0\refint\TestProje
 D:\Hamed\WebTest\CoinGecko_Phase2\TestProject1\obj\Debug\net7.0\TestProject1.pdb
 D:\Hamed\WebTest\CoinGecko_Phase2\TestProject1\obj\Debug\net7.0\TestProject1.genruntimeconfig.cache
 D:\Hamed\WebTest\CoinGecko_Phase2\TestProject1\obj\Debug\net7.0\ref\TestProject1.dll
+D:\Hamed\WebTest\CoinGecko_Phase2\TestProject1\bin\Debug\net7.0\Castle.Core.dll
+D:\Hamed\WebTest\CoinGecko_Phase2\TestProject1\bin\Debug\net7.0\Moq.dll
