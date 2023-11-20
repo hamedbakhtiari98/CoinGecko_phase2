@@ -23,8 +23,8 @@ builder.Services.AddTransient<IStudentRepository, StudentRepository>();
 builder.Services.AddTransient<ICryptoRepository, CryptoRepository>();
 
 builder.Services.AddHealthChecks()
-    //.AddCheck<HealthDbConnection>("SqlServer")
-    .AddSqlServer(builder.Configuration["ConnectionStrings:MyStudentDbConnectionString"])
+    .AddCheck<HealthDbConnection>("SqlServer")
+   // .AddSqlServer(builder.Configuration["ConnectionStrings:MyStudentDbConnectionString"])
     .AddCheck<HealthCheckConiGeckoApi>("ConinGeckoApi");
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
