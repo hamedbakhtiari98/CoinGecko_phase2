@@ -17,10 +17,10 @@ var config = builder.Configuration;
 
 // Add services to the container.
 
-builder.Services.AddTransient<IStudentServeice, StudentService>();
-builder.Services.AddTransient<ICryptoService, CryptoService>();
-builder.Services.AddTransient<IStudentRepository, StudentRepository>();
-builder.Services.AddTransient<ICryptoRepository, CryptoRepository>();
+builder.Services.AddSingleton<IStudentServeice, StudentService>();
+builder.Services.AddSingleton<ICryptoService, CryptoService>();
+builder.Services.AddSingleton<IStudentRepository, StudentRepository>();
+builder.Services.AddSingleton<ICryptoRepository, CryptoRepository>();
 
 builder.Services.AddHealthChecks()
     .AddCheck<HealthDbConnection>("SqlServer")
@@ -122,7 +122,11 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("logs/demo.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
+builder.Services.AddCors(p => p.AddPolicy("corsPplicy", build =>
 
+{
+    build.WithOrigins("https://localhost:7069").AllowAnyOrigin().AllowAnyMethod();
+}));
 
 
 
@@ -144,6 +148,9 @@ app.MapHealthChecks("/_health", new Microsoft.AspNetCore.Diagnostics.HealthCheck
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 }) ;
+
+//app.UseCors
+app.UseCors("corsPplicy");
 
 app.UseRouting();
 app.UseAuthentication();
