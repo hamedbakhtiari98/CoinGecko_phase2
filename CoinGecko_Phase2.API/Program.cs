@@ -17,10 +17,10 @@ var config = builder.Configuration;
 
 // Add services to the container.
 
-builder.Services.AddSingleton<IStudentServeice, StudentService>();
-builder.Services.AddSingleton<ICryptoService, CryptoService>();
-builder.Services.AddSingleton<IStudentRepository, StudentRepository>();
-builder.Services.AddSingleton<ICryptoRepository, CryptoRepository>();
+builder.Services.AddTransient<IStudentServeice, StudentService>();
+builder.Services.AddTransient<ICryptoService, CryptoService>();
+builder.Services.AddTransient<IStudentRepository, StudentRepository>();
+builder.Services.AddTransient<ICryptoRepository, CryptoRepository>();
 
 builder.Services.AddHealthChecks()
     .AddCheck<HealthDbConnection>("SqlServer")
