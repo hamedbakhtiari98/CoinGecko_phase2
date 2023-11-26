@@ -68,49 +68,49 @@ namespace CoinGecko_Phase2.API
 
         public string GenerateJWT(string userName, string passWord)
         {
-            //var student = Login(userName, Service.HashPass(passWord));
-            //var configure = StudentService.InitConfiguration();
+            var student = Login(userName, Service.HashPass(passWord));
+            var configure = StudentService.InitConfiguration();
 
 
-            //if (student == null)
-            //{
-            //    return null;
-            //}
+            if (student == null)
+            {
+                return null;
+            }
 
-            //var securityKey = new SymmetricSecurityKey(
-            //    Encoding.ASCII.GetBytes(configure["JwtSettings:Key"]));
+            var securityKey = new SymmetricSecurityKey(
+                Encoding.ASCII.GetBytes(configure["JwtSettings:Key"]));
 
-            ////byte[] test = Encoding.ASCII.GetBytes(configure["JwtSettings:Issuer"]);
+            //byte[] test = Encoding.ASCII.GetBytes(configure["JwtSettings:Issuer"]);
 
-            ////string test1 = test[1].ToString();
-            ////string test2 = test[2].ToString();
+            //string test1 = test[1].ToString();
+            //string test2 = test[2].ToString();
 
-            //var signInCredentials = new SigningCredentials(
-            //    securityKey, SecurityAlgorithms.HmacSha256
-            //    );
-            //var ClaimsForToken = new List<Claim>();
-            //ClaimsForToken.Add(new Claim("UserId", student.StudentId.ToString()));
-            //ClaimsForToken.Add(new Claim("UserName", student.UserName));
-            //ClaimsForToken.Add(new Claim("Password", student.PassWord));
-            //ClaimsForToken.Add(new Claim("Name", student.Name));
+            var signInCredentials = new SigningCredentials(
+                securityKey, SecurityAlgorithms.HmacSha256
+                );
+            var ClaimsForToken = new List<Claim>();
+            ClaimsForToken.Add(new Claim("UserId", student.StudentId.ToString()));
+            ClaimsForToken.Add(new Claim("UserName", student.UserName));
+            ClaimsForToken.Add(new Claim("Password", student.PassWord));
+            ClaimsForToken.Add(new Claim("Name", student.Name));
 
-            ////var q = configure["JwtSettings:Issuer"];
+            //var q = configure["JwtSettings:Issuer"];
 
-            //var jwtSecurityToken = new JwtSecurityToken(
-            //    configure["JwtSettings:Issuer"],
-            //    configure["JwtSettings:Audience"],
-            //    ClaimsForToken,
-            //    DateTime.UtcNow,
-            //    DateTime.UtcNow.AddHours(1),
-            //    signInCredentials
-            //);
+            var jwtSecurityToken = new JwtSecurityToken(
+                configure["JwtSettings:Issuer"],
+                configure["JwtSettings:Audience"],
+                ClaimsForToken,
+                DateTime.UtcNow,
+                DateTime.UtcNow.AddHours(1),
+                signInCredentials
+            );
 
-            //var token = new JwtSecurityTokenHandler()
-            //    .WriteToken(jwtSecurityToken);
+            var token = new JwtSecurityTokenHandler()
+                .WriteToken(jwtSecurityToken);
 
-            //return token;
+            return token;
 
-            return studentRepository.GenerateJWT(userName, passWord);
+           // return studentRepository.GenerateJWT(userName, passWord);
 
         }
 
@@ -124,6 +124,11 @@ namespace CoinGecko_Phase2.API
             }
             var token = handler.ReadJwtToken(jwtString).Payload.Claims.ToList();
             return token[1].Value;
+        }
+
+        public int UpdateStudnet(int id, string name)
+        {
+            return studentRepository.UpdateStudnet(id, name);
         }
     }
 }

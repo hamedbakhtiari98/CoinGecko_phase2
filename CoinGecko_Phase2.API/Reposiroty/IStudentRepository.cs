@@ -1,4 +1,7 @@
-﻿namespace CoinGecko_Phase2.API.Reposiroty
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Data.Entity.Infrastructure;
+
+namespace CoinGecko_Phase2.API.Reposiroty
 {
     public interface IStudentRepository
     {
@@ -6,7 +9,11 @@
         int AddAdmin(Student student);
         Student GetStudent(string userName, string passWord);
         List<Student> GetAllStudents();
-        public string GenerateJWT(string userName, string PassWord);
+        string GenerateJWT(string userName, string PassWord);
+        Student GetStudentByUsername(string userName);
+        //EntityEntry<Student> GetStudentEntryStatus(Student student);
+        int UpdateStudnet(int id, string name);
+
 
     }
 }

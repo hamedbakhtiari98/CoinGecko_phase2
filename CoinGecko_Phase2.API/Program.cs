@@ -1,3 +1,4 @@
+﻿using Azure.Core;
 using CoinGecko_Phase2.API;
 using CoinGecko_Phase2.API.Health;
 using CoinGecko_Phase2.API.Reposiroty;
@@ -17,14 +18,14 @@ var config = builder.Configuration;
 
 // Add services to the container.
 
-builder.Services.AddSingleton<IStudentServeice, StudentService>();
-builder.Services.AddSingleton<ICryptoService, CryptoService>();
-builder.Services.AddSingleton<IStudentRepository, StudentRepository>();
-builder.Services.AddSingleton<ICryptoRepository, CryptoRepository>();
+builder.Services.AddScoped<IStudentServeice, StudentService>();
+builder.Services.AddScoped<ICryptoService, CryptoService>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<ICryptoRepository, CryptoRepository>();
 
 builder.Services.AddHealthChecks()
     .AddCheck<HealthDbConnection>("SqlServer")
-   // .AddSqlServer(builder.Configuration["ConnectionStrings:MyStudentDbConnectionString"])
+    // .AddSqlServer(builder.Configuration["ConnectionStrings:MyStudentDbConnectionString"])
     .AddCheck<HealthCheckConiGeckoApi>("ConinGeckoApi");
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -37,49 +38,32 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoinGecko_Phase2.API", Version = "v1" });
 
-    c.AddSecurityDefinition(name: "Bearer", securityScheme: new OpenApiSecurityScheme
-    {
-        In = ParameterLocation.Header,
-        Description = "Please enter a valid token",
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = "Bearer"
-    });
-
-
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-{
-    {
-        new OpenApiSecurityScheme
-        {
-            Name = "Bearer",
-            In = ParameterLocation.Header,
-            Reference = new OpenApiReference
-            {
-                Id = "Bearer",
-                Type = ReferenceType.SecurityScheme
-            }
-        },
-        new string[]{ }
-    }
-});
+    //c.AddSecurityDefinition(name: "Bearer", securityScheme: new OpenApiSecurityScheme
+    //{
+    //    In = ParameterLocation.Header,
+    //    Description = "Please enter a valid token",
+    //    Name = "Authorization",
+    //    Type = SecuritySchemeType.Http,
+    //    BearerFormat = "JWT",
+    //    Scheme = "Bearer"
+    //});
 
     //c.AddSecurityRequirement(new OpenApiSecurityRequirement
     //{
     //    {
     //        new OpenApiSecurityScheme
     //        {
+    //            Name = "Bearer",
+    //            In = ParameterLocation.Header,
     //            Reference = new OpenApiReference
     //            {
-    //                Type=ReferenceType.SecurityScheme,
-    //                Id="Bearer"
+    //                Id = "Bearer",
+    //                Type = ReferenceType.SecurityScheme
     //            }
     //        },
-    //        new string[]{}
+    //        new string[]{ }
     //    }
     //});
-
 });
 
 builder.Services.AddQuartz();
@@ -116,18 +100,26 @@ builder.Services.AddAuthorization(options =>
 });
 
 //Console.WriteLine("Hello World");
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
-    .WriteTo.Console()
-    .WriteTo.File("logs/demo.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
+//Log.Logger = new LoggerConfiguration()
+//    .MinimumLevel.Information()
+//    .WriteTo.Console()
+//    .WriteTo.File("logs/demo.txt", rollingInterval: RollingInterval.Day)
+//    .CreateLogger();
 
 builder.Services.AddCors(p => p.AddPolicy("corsPplicy", build =>
-
 {
-    build.WithOrigins("https://localhost:7069").AllowAnyOrigin().AllowAnyMethod();
+    build.WithOrigins("https://www.google.com").AllowAnyHeader().AllowAnyMethod().SetPreflightMaxAge(TimeSpan.FromSeconds(10)); ///کاربرد این رو نفهمیدم دقیقا : الان فهمیدم منتظر میمونه که پاسخ از سمت سرور بیاد که اجازه اوریجین ریکوئست هست یا خیر. اگر بذاریم یک میکرو ثانیه با اینکه دسترسی دادیم . ارور میگیریم.
 }));
 
+/////// فردا سه تا چیز رو به حسین بگو حتما
+///1. اینکه درخواست ارسال میشه، داده ها هم گرفته میشن و بعدش مرورگر استپ میکنه
+///2. تنظیمات Cors برای مروگر ها هستش نه برای نرم افزارهایی مثل Postman
+///3. لینک زیر
+///4. دیروز تنظیمات میدلور ها کار رو خراب کرده بود
+///5. کنسول پست من
+////درباره اینکه چرا تو پست من کار نمیکنه//////////////////////////////////////https://stackoverflow.com/questions/36250615/cors-with-postman 
+////درباره اینکه چرا تو پست من کار نمیکنه//////////////////////////////////////https://requestly.io/blog/how-postman-web-handles-cors/
+//// در حالت عادی پست من روی چه origin کار میکنه
 
 
 var app = builder.Build();
@@ -144,17 +136,31 @@ app.UseExceptionHandler("/error");
 
 app.UseHttpsRedirection();
 
+
 app.MapHealthChecks("/_health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-}) ;
+});
+
+
 
 //app.UseCors
-app.UseCors("corsPplicy");
 
 app.UseRouting();
+
+app.UseCors("corsPplicy");
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+//app.Run(async context =>
+//{
+//    Console.WriteLine(context.Request.Headers.Origin);
+//    Console.WriteLine(context.Request.Headers.AccessControlAllowOrigin);
+//    Console.WriteLine(context.Request.Headers.Server);
+//    Console.WriteLine(context.Request.Headers.AccessControlRequestHeaders);
+//});
+//////// توجه که این تیکه کد رو نباید اینجا بذارید وگرنه که برنامه اصلا به End point نمیرسد
 
 app.UseEndpoints(endpoints =>
 {
@@ -162,3 +168,15 @@ app.UseEndpoints(endpoints =>
 });
 
 app.Run();
+
+app.Run(async context =>
+{
+    Console.WriteLine("--------------------------------------------");
+    Console.WriteLine(context.Request.Headers.Origin);
+    Console.WriteLine(context.Request.Headers.AccessControlAllowOrigin);
+    Console.WriteLine(context.Request.Headers.Server);
+    Console.WriteLine(context.Request.Headers.AccessControlRequestHeaders);
+    Console.WriteLine("--------------------------------------------");
+});
+
+

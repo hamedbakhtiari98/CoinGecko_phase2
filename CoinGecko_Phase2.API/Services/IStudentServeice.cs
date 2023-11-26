@@ -1,4 +1,7 @@
-﻿namespace CoinGecko_Phase2.API
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Data.Entity.Infrastructure;
+
+namespace CoinGecko_Phase2.API
 {
     public interface IStudentServeice
     {
@@ -8,5 +11,7 @@
         int AddAdmin();
         int AddStudent(Student student);
         string ReadJWT(string jwtString);
+        int UpdateStudnet(int id, string name);
+
     }
 }

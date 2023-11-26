@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CoinGecko_Phase2.API.Models;
 using CoinGecko_Phase2.API.Reposiroty;
 using RestSharp;
 using System.Text.Json;
@@ -6,7 +7,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CoinGecko_Phase2.API
 {
-    public class CryptoService:ICryptoService
+    public class CryptoService : ICryptoService
     {
         private readonly IMapper mapper;
         private readonly ICryptoRepository cryptoRepository;
@@ -47,6 +48,19 @@ namespace CoinGecko_Phase2.API
             var cryptoInfoWithCrypto = mapper.Map<OhlcWithCrypto>(q);
             return cryptoInfoWithCrypto;
 
+        }
+
+        public OHLC? GetOHLCByStoreProcedure3(string CryptoIdd, string dateTime)
+        {
+            var q = cryptoRepository.GetOHLCByStoreProcedure(CryptoIdd, dateTime);
+            return q;
+        }
+
+        public OhlcWithCryptoDTO? GetOHLCByStoreProcedure5(string CryptoId, string dateTime)
+        {
+            var q = cryptoRepository.GetOHLCByStoreProcedure5(CryptoId, dateTime);
+            var ohlcWithCrypto = mapper.Map<OhlcWithCryptoDTO>(q);
+            return ohlcWithCrypto;
         }
     }
 }

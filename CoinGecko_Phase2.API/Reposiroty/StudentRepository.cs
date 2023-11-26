@@ -1,5 +1,10 @@
-﻿using CoinGecko_Phase2.API.Reposiroty;
+﻿using CoinGecko_Phase2.API.Models;
+using CoinGecko_Phase2.API.Reposiroty;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel;
+using System.Data.Entity.Infrastructure;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -12,7 +17,7 @@ namespace CoinGecko_Phase2.API
 
         public StudentRepository(MyContext context)
         {
-                this.context = context;
+            this.context = context;
         }
 
 
@@ -24,7 +29,7 @@ namespace CoinGecko_Phase2.API
 
         public int AddStudent(Student student)
         {
-            context.students.Add(student);
+            var q = context.students.Add(student);
             return context.SaveChanges();
         }
 
@@ -35,7 +40,7 @@ namespace CoinGecko_Phase2.API
 
         public Student GetStudent(string userName, string passWord)
         {
-            return context.students.SingleOrDefault(s=>s.UserName ==  userName && s.PassWord == passWord);  
+            return context.students.SingleOrDefault(s => s.UserName == userName && s.PassWord == passWord);
         }
 
 
@@ -96,6 +101,33 @@ namespace CoinGecko_Phase2.API
 
             return token;
         }
+
+        public Student GetStudentByUsername(string userName)
+        {
+            return context.students.Find(userName);
+        }
+
+        public int UpdateStudnet(int id, string name)
+        {
+
+            var student = context.students.Find(id);
+            student.Name = name;
+
+            var studentEntry = context.Entry(student);
+            var originalValue = studentEntry.OriginalValues["Name"].GetType().FullName; 
+            var currentValue = studentEntry.CurrentValues["Name"];
+
+            var t = context.students.Update(student);
+            return context.SaveChanges();
+        }
+
+
+        //public EntityEntry<Student> GetStudentEntryStatus(Student student)
+        //{
+        //    var studentEntry = context.Entry(student);
+        //    return studentEntry;
+        //}
+
 
     }
 }

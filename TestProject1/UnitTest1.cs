@@ -83,7 +83,7 @@ namespace TestProject1
             Assert.Equal(userName, student.UserName);
 
         }
-
+        
         [Fact]
         public void JWTGenerateTest()
         {

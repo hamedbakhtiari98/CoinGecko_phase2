@@ -63,6 +63,7 @@ namespace CoinGecko_Phase2.API
         public DbSet<CryptoInfo> CryptoInfos { get; set; }
         public DbSet<OHLC> oHLCs { get; set; }
         public DbSet<Category> categories { get; set; }
+        public DbSet<OhlcWithCrypto> ohlcWithCryptos { get; set; }
 
         #endregion
 

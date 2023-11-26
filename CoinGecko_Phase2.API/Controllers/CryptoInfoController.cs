@@ -69,8 +69,6 @@ namespace CoinGecko_Phase2.API.Controllers
                 return NotFound();
             }
             return Ok(category);
-
-
         }
 
 
@@ -87,5 +85,22 @@ namespace CoinGecko_Phase2.API.Controllers
         //    return Ok(cryptoInfoDTO);
 
         //}
+
+        [HttpGet]
+        [Route("GetOHLC_StoreProcedure/{CryptoId}/{dateTime}")]
+        public IActionResult GetCategories(string CryptoId, string dateTime)
+        {
+
+            var ohlc = cryptoService.GetOHLCByStoreProcedure5(CryptoId, dateTime);
+
+            Log.Information("Crypto Information Log");
+            Log.Information("Crypto Informations are => {@ohlc}", ohlc);
+            if (ohlc == null)
+            {
+                return NotFound();
+            }
+            return Ok(ohlc);
+        }
+
     }
 }
